@@ -1,0 +1,203 @@
+{
+  "generated_by": "tools/build_assets.py",
+  "sprites": {
+    "1": "sprites/jelly_level_1.png",
+    "2": "sprites/jelly_level_2.png",
+    "3": "sprites/jelly_level_3.png",
+    "4": "sprites/jelly_level_4.png",
+    "5": "sprites/jelly_level_5.png",
+    "6": "sprites/jelly_level_6.png",
+    "7": "sprites/jelly_level_7.png",
+    "8": "sprites/jelly_level_8.png",
+    "9": "sprites/jelly_level_9.png",
+    "10": "sprites/jelly_level_10.png",
+    "11": "sprites/jelly_level_11.png"
+  },
+  "jelly_anim": {
+    "1": {
+      "shell": "jelly_anim/level_1_shell.png",
+      "frames": "jelly_anim/level_1_frames.png",
+      "frame_w": 30,
+      "frame_h": 30,
+      "cols": 10,
+      "rows": 6,
+      "count": 60,
+      "duration": 6
+    },
+    "2": {
+      "shell": "jelly_anim/level_2_shell.png",
+      "frames": "jelly_anim/level_2_frames.png",
+      "frame_w": 35,
+      "frame_h": 58,
+      "cols": 10,
+      "rows": 6,
+      "count": 60,
+      "duration": 3
+    },
+    "3": {
+      "shell": "jelly_anim/level_3_shell.png",
+      "frames": "jelly_anim/level_3_frames.png",
+      "frame_w": 64,
+      "frame_h": 64,
+      "cols": 10,
+      "rows": 6,
+      "count": 60,
+      "duration": 6
+    },
+    "4": {
+      "shell": "jelly_anim/level_4_shell.png",
+      "frames": "jelly_anim/level_4_frames.png",
+      "frame_w": 78,
+      "frame_h": 78,
+      "cols": 10,
+      "rows": 6,
+      "count": 60,
+      "duration": 6
+    },
+    "5": {
+      "shell": "jelly_anim/level_5_shell.png",
+      "frames": "jelly_anim/level_5_frames.png",
+      "frame_w": 92,
+      "frame_h": 92,
+      "cols": 10,
+      "rows": 6,
+      "count": 60,
+      "duration": 6
+    },
+    "6": {
+      "shell": "jelly_anim/level_6_shell.png",
+      "frames": "jelly_anim/level_6_frames.png",
+      "frame_w": 111,
+      "frame_h": 111,
+      "cols": 10,
+      "rows": 6,
+      "count": 60,
+      "duration": 6.0333333015441895
+    },
+    "7": {
+      "shell": "jelly_anim/level_7_shell.png",
+      "frames": "jelly_anim/level_7_frames.png",
+      "frame_w": 150,
+      "frame_h": 121,
+      "cols": 10,
+      "rows": 6,
+      "count": 60,
+      "duration": 6
+    },
+    "8": {
+      "shell": "jelly_anim/level_8_shell.png",
+      "frames": "jelly_anim/level_8_frames.png",
+      "frame_w": 170,
+      "frame_h": 180,
+      "cols": 10,
+      "rows": 6,
+      "count": 60,
+      "duration": 6
+    },
+    "9": {
+      "shell": "jelly_anim/level_9_shell.png",
+      "frames": "jelly_anim/level_9_frames.png",
+      "frame_w": 205,
+      "frame_h": 218,
+      "cols": 10,
+      "rows": 6,
+      "count": 60,
+      "duration": 6
+    },
+    "10": {
+      "shell": "jelly_anim/level_10_shell.png",
+      "frames": "jelly_anim/level_10_frames.png",
+      "frame_w": 235,
+      "frame_h": 235,
+      "cols": 10,
+      "rows": 6,
+      "count": 60,
+      "duration": 6
+    },
+    "11": {
+      "shell": "jelly_anim/level_11_shell.png",
+      "frames": "jelly_anim/level_11_frames.png",
+      "frame_w": 258,
+      "frame_h": 258,
+      "cols": 10,
+      "rows": 6,
+      "count": 60,
+      "duration": 6
+    }
+  },
+  "ui": {
+    "img_bottle_1": "ui/img_bottle_1.png",
+    "img_bottle_1_1": "ui/img_bottle_1_1.png",
+    "img_bottle_1_2": "ui/img_bottle_1_2.png",
+    "img_line_1": "ui/img_line_1.png",
+    "img_go": "ui/img_go.png",
+    "jiemian2_15": "ui/jiemian2_15.png"
+  },
+  "clamp_spine": "clamp/clamp_spine.json",
+  "clamp": {
+    "1": "clamp/jiazi_1.png",
+    "2": "clamp/jiazi_2.png",
+    "3": "clamp/jiazi_3.png",
+    "4": "clamp/jiazi_4.png",
+    "5": "clamp/jiazi_5.png",
+    "6": "clamp/jiazi_6.png",
+    "7": "clamp/jiazi_7.png",
+    "8": "clamp/jiazi_8.png",
+    "9": "clamp/jiazi_9.png",
+    "10": "clamp/jiazi_10.png",
+    "11": "clamp/jiazi_11.png",
+    "12": "clamp/jiazi_12.png"
+  },
+  "score_bubble": "particles/qipao.png",
+  "particles": [
+    "particles/paopao1_00.png",
+    "particles/paopao1_01.png",
+    "particles/paopao1_02.png",
+    "particles/paopao1_03.png",
+    "particles/paopao1_04.png",
+    "particles/paopao1_05.png",
+    "particles/paopao1_06.png",
+    "particles/paopao1_07.png",
+    "particles/paopao1_08.png",
+    "particles/paopao1_09.png",
+    "particles/paopao1_10.png",
+    "particles/paopao1_11.png",
+    "particles/paopao1_12.png",
+    "particles/paopao1_13.png",
+    "particles/paopao1_14.png",
+    "particles/paopao1_15.png",
+    "particles/paopao1_16.png",
+    "particles/paopao1_17.png",
+    "particles/paopao1_18.png",
+    "particles/paopao1_19.png"
+  ],
+  "background": {
+    "bj": "background/bj.png",
+    "official_bg2_foreground": "background/official_bg2_foreground.png",
+    "side_bubble": "background/side_bubble.png",
+    "custom_fish_D": "background/custom_fish_D.png",
+    "custom_fish_J": "background/custom_fish_J.png",
+    "elements": "background/official_bg2_elements.json"
+  },
+  "font": "fonts/pop1w5.ttc",
+  "audio": {
+    "bgm": "audio/official_minigame_205264034.mp3",
+    "aliases": {
+      "drop": "audio/mini_game_bottle_in.wav",
+      "warn": "audio/warning.wav",
+      "warn_loop": "audio/warning_lp.wav",
+      "over": "audio/mini_game_result.wav",
+      "start": "audio/mini_game_go.wav",
+      "contact": "audio/combine_2.wav",
+      "merge_2": "audio/combine_2.wav",
+      "merge_3": "audio/combine_3.wav",
+      "merge_4": "audio/combine_4.wav",
+      "merge_5": "audio/combine_5.wav",
+      "merge_6": "audio/combine_6.wav",
+      "merge_7": "audio/combine_7.wav",
+      "merge_8": "audio/combine_8.wav",
+      "merge_9": "audio/combine_9.wav",
+      "merge_10": "audio/combine_10.wav"
+    }
+  }
+}
