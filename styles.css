@@ -289,6 +289,62 @@ html, body {
   color: var(--ink-dim);
   background: #04132a;
 }
-@media (max-aspect-ratio: 1/1) and (max-width: 820px) {
-  #rotate-hint { display: flex; }
+/* Portrait is now supported by the layout itself, so the rotate hint stays
+   hidden (kept in the DOM only as a harmless fallback). */
+
+/* ---------- Portrait phones (driven by JS .portrait class, see fitStage) ----------
+   The play area + canvas HUD are handled on the canvas; here we only make the
+   DOM overlays fit the viewport instead of the up-scaled 1600x900 stage. The
+   trick: vw/vh resolve to the viewport regardless of the ancestor transform, so
+   dividing by --scale (the stage scale) yields the right design-space size.
+   Every rule is .portrait-prefixed so landscape is byte-for-byte unchanged. */
+/* NOTE: the .portrait class lives ON #app itself (not an ancestor), so this
+   rule uses #app.portrait (intersection), not .portrait #app (descendant). */
+#app.portrait {
+  overflow: hidden;
+  /* Without this, the vertical letterbox above/below the scaled stage shows a
+     flat dark navy that hard-cuts against the canvas's bright teal seabed.
+     Extend the game's sea background image across the whole viewport, with a
+     soft top/bottom dim to focus the eye on the play area. bj.png is already
+     loaded as a game asset, so it serves from cache with no extra request. */
+  background:
+    linear-gradient(180deg,
+      rgba(4,18,38,0.55) 0%,
+      rgba(4,18,38,0.05) 22%,
+      rgba(4,18,38,0.05) 78%,
+      rgba(4,18,38,0.55) 100%),
+    url("assets/background/bj.png") center / cover no-repeat,
+    radial-gradient(120% 120% at 50% 0%, #0a2b44 0%, #050f22 70%);
+}
+
+/* Shades must cover the full viewport (the stage is vertically letterboxed in
+   portrait). Re-center on the stage center, which equals the viewport center. */
+.portrait #overlays .overlay {
+  inset: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100vw / var(--scale, 1));
+  height: calc(100vh / var(--scale, 1));
+}
+
+/* Boxes never exceed the viewport; they shrink on narrow screens. */
+.portrait .modal-box {
+  width: min(calc((100vw - 32px) / var(--scale, 1)), 860px);
+  max-height: calc((100vh - 24px) / var(--scale, 1));
+  overflow-y: auto;
+}
+.portrait .rank-box { height: auto; }
+.portrait .rank-columns { flex-direction: column; gap: 6px; }
+.portrait .nick-box,
+.portrait .loading-box {
+  width: min(calc((100vw - 32px) / var(--scale, 1)), 520px);
+}
+
+/* Settings panel: anchored top-left in landscape; centered in portrait. */
+.portrait #settings-panel {
+  left: 50%;
+  top: 120px;
+  transform: translateX(-50%);
+  width: min(calc((100vw - 32px) / var(--scale, 1)), 360px);
 }

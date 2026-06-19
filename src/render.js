@@ -568,6 +568,19 @@ export class Renderer {
   drawScore(now) {
     const g = this.app.game;
     const a = this.app.assets;
+    if (this.app.portrait) {
+      // Compact score cluster on the band's LEFT edge (clear of the claw, which
+      // roams x>=512). Best score moves here too (the side rank panel is gone).
+      // cx kept >=~490 so the label keeps a safe left margin on 360px-wide phones.
+      const cx = 494;
+      const bubbleY = 98 + scoreBubbleFloatOffset(now);
+      if (a.scoreBubble) this.blitFx(a.scoreBubble, cx, bubbleY, { scale: 0.52, alpha: 232 });
+      this.text("我的得分", cx, 42, { size: 24, align: "center", color: "#fcfdff", tracking: 1, shadow: "rgba(9,27,48,0.4)" });
+      this.text(String(g.score), cx, bubbleY + 12, { size: 40, bold: true, align: "center", color: "#ffffff", shadow: "rgba(9,24,44,0.4)" });
+      const best = Math.max(0, (this.app.save && this.app.save.best_score) || 0);
+      this.text("最佳 " + best, cx, 146, { size: 20, align: "center", color: "#e6da82", shadow: "rgba(9,24,44,0.4)" });
+      return;
+    }
     const cx = 404, cy = 160;
     const bubbleY = cy + scoreBubbleFloatOffset(now);
     if (a.scoreBubble) this.blitFx(a.scoreBubble, cx, bubbleY, { scale: 0.86, alpha: 238 });
@@ -577,7 +590,7 @@ export class Renderer {
 
   drawSettingsButton() {
     const ctx = this.ctx;
-    const r = { x: 24, y: 22, w: 78, h: 66 };
+    const r = this.settingsButtonRect();
     ctx.save();
     ctx.fillStyle = this.app.ui && this.app.ui.settingsOpen ? "rgba(12,40,72,0.67)" : "rgba(8,28,54,0.47)";
     this.roundRect(r.x, r.y, r.w, r.h, 10); ctx.fill();
@@ -597,13 +610,46 @@ export class Renderer {
     ctx.restore();
   }
 
-  settingsButtonRect() { return { x: 24, y: 22, w: 78, h: 66 }; }
-  rankPanelRect() { return { x: 54, y: 438, w: 426, h: 326 }; }
+  settingsButtonRect() {
+    // Portrait: small icon stacked on the left, under the score cluster. Kept in
+    // the left gutter (right edge ~494 < bottleLeft 512) so it clears the bottle.
+    if (this.app.portrait) return { x: 434, y: 188, w: 60, h: 56 };
+    return { x: 24, y: 22, w: 78, h: 66 };
+  }
+  rankPanelRect() {
+    // Portrait: leaderboard icon below the gear on the left (same left gutter).
+    if (this.app.portrait) return { x: 434, y: 258, w: 60, h: 56 };
+    return { x: 54, y: 438, w: 426, h: 326 };
+  }
 
   drawRankPanel() {
     const ctx = this.ctx;
     const app = this.app;
     const r = this.rankPanelRect();
+    if (app.portrait) {
+      // Leaderboard as a small left-side icon (podium), matching the gear's
+      // chrome; tap opens the TOP-50 modal (rankPanelRect is the hit area).
+      const cx = r.x + r.w / 2, cy = r.y + r.h / 2;
+      ctx.save();
+      ctx.fillStyle = "rgba(8,28,54,0.47)";
+      this.roundRect(r.x, r.y, r.w, r.h, 10); ctx.fill();
+      ctx.strokeStyle = "rgba(154,222,248,0.46)"; ctx.lineWidth = 1;
+      this.roundRect(r.x, r.y, r.w, r.h, 10); ctx.stroke();
+      // three rounded bars on a shared baseline, center tallest (1st place gold)
+      const bw = 8, gap = 3, baseY = cy + 12;
+      const bars = [
+        [cx - bw - gap, 14, "rgba(190,226,246,0.82)"], // 2nd place (left)
+        [cx, 22, "rgba(232,218,130,0.95)"],            // 1st place (center)
+        [cx + bw + gap, 10, "rgba(190,226,246,0.82)"], // 3rd place (right)
+      ];
+      for (const [bx, bh, col] of bars) {
+        ctx.fillStyle = col;
+        this.roundRect(bx - bw / 2, baseY - bh, bw, bh, 2);
+        ctx.fill();
+      }
+      ctx.restore();
+      return;
+    }
     ctx.save();
     ctx.fillStyle = "rgba(9,28,54,0.48)";
     this.roundRect(r.x, r.y, r.w, r.h, 5); ctx.fill();
@@ -661,6 +707,17 @@ export class Renderer {
 
   drawNextAndRoad() {
     const g = this.app.game;
+    if (this.app.portrait) {
+      // Top-right "next" preview (mirrors the score on the left); 水母图鉴 cropped.
+      const cx = 1100;
+      this.text("下一个", cx, 46, { size: 24, align: "center", color: "#fcfdff", tracking: 1, shadow: "rgba(9,27,48,0.4)" });
+      if (g.nextLevel) {
+        const [nw, nh] = g.visualSizeForLevel(g.nextLevel);
+        const ratio = Math.min(1, 54 / Math.max(nw, nh)); // cap preview to ~54px
+        this.drawJellyVisual(g.nextLevel, cx, 104, nw * ratio, nh * ratio, { alpha: 245, phaseTime: nowSeconds() });
+      }
+      return;
+    }
     this.text("下一个", 1226, 70, { size: 36, align: "center", color: "#fcfdff", tracking: 2, shadow: "rgba(9,27,48,0.4)" });
     if (g.nextLevel) {
       const [nw, nh] = g.visualSizeForLevel(g.nextLevel);

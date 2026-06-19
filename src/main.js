@@ -17,6 +17,7 @@ import { sanitizeNickname } from "./util.js";
 const app = {
   assets: null, audio: null, save: null, game: null, renderer: null, ui: null,
   clamp: null,
+  portrait: false,
   leaderboardTop3: [], leaderboardStatus: "正在加载...",
   leaderboardTop50: [], leaderboardFullStatus: "正在加载...",
   currentGameSession: null,
@@ -25,10 +26,22 @@ const app = {
 };
 
 // ---------- responsive stage fit ----------
+// Portrait keeps the SAME 1600x900 stage and all game logic untouched; it only
+// fills a central band (PORTRAIT_BAND_W wide, symmetric about stage-center x800)
+// to the viewport width and lets the side gutters overflow + clip. Landscape
+// math is unchanged. The renderer reads app.portrait per frame and the .portrait
+// class drives portrait-only CSS, so landscape<->portrait flips stay safe.
+const PORTRAIT_BAND_W = 760;
 function fitStage() {
   const stage = document.getElementById("stage");
-  const scale = Math.min(window.innerWidth / DESIGN_W, window.innerHeight / DESIGN_H);
+  const isPortrait = window.innerHeight > window.innerWidth;
+  const scale = isPortrait
+    ? Math.min(window.innerWidth / PORTRAIT_BAND_W, window.innerHeight / DESIGN_H)
+    : Math.min(window.innerWidth / DESIGN_W, window.innerHeight / DESIGN_H);
   stage.style.transform = `scale(${scale})`;
+  app.portrait = isPortrait;
+  document.getElementById("app").classList.toggle("portrait", isPortrait);
+  document.documentElement.style.setProperty("--scale", String(scale));
 }
 
 function applyNicknameResult(result) {
