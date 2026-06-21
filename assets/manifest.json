@@ -183,21 +183,38 @@
   "audio": {
     "bgm": "audio/official_minigame_205264034.mp3",
     "aliases": {
-      "drop": "audio/mini_game_bottle_in.wav",
-      "warn": "audio/warning.wav",
-      "warn_loop": "audio/warning_lp.wav",
-      "over": "audio/mini_game_result.wav",
-      "start": "audio/mini_game_go.wav",
-      "contact": "audio/combine_2.wav",
-      "merge_2": "audio/combine_2.wav",
-      "merge_3": "audio/combine_3.wav",
-      "merge_4": "audio/combine_4.wav",
-      "merge_5": "audio/combine_5.wav",
-      "merge_6": "audio/combine_6.wav",
-      "merge_7": "audio/combine_7.wav",
-      "merge_8": "audio/combine_8.wav",
-      "merge_9": "audio/combine_9.wav",
-      "merge_10": "audio/combine_10.wav"
+      "drop": "audio/mini_game_bottle_in.ogg",
+      "warn": "audio/warning.ogg",
+      "warn_loop": "audio/warning_lp.ogg",
+      "over": "audio/mini_game_result.ogg",
+      "start": "audio/mini_game_go.ogg",
+      "contact": "audio/combine_2.ogg",
+      "merge_2": "audio/combine_2.ogg",
+      "merge_3": "audio/combine_3.ogg",
+      "merge_4": "audio/combine_4.ogg",
+      "merge_5": "audio/combine_5.ogg",
+      "merge_6": "audio/combine_6.ogg",
+      "merge_7": "audio/combine_7.ogg",
+      "merge_8": "audio/combine_8.ogg",
+      "merge_9": "audio/combine_9.ogg",
+      "merge_10": "audio/combine_10.ogg"
+    },
+    "fallbackAliases": {
+      "drop": "audio/mini_game_bottle_in.m4a",
+      "warn": "audio/warning.m4a",
+      "warn_loop": "audio/warning_lp.m4a",
+      "over": "audio/mini_game_result.m4a",
+      "start": "audio/mini_game_go.m4a",
+      "contact": "audio/combine_2.m4a",
+      "merge_2": "audio/combine_2.m4a",
+      "merge_3": "audio/combine_3.m4a",
+      "merge_4": "audio/combine_4.m4a",
+      "merge_5": "audio/combine_5.m4a",
+      "merge_6": "audio/combine_6.m4a",
+      "merge_7": "audio/combine_7.m4a",
+      "merge_8": "audio/combine_8.m4a",
+      "merge_9": "audio/combine_9.m4a",
+      "merge_10": "audio/combine_10.m4a"
     }
   }
 }

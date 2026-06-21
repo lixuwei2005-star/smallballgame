@@ -39,9 +39,21 @@ export class AudioManager {
     this._manifestAudio = manifestAudio || {};
     this._ensureCtx();
     if (!this.ctx) return;
-    const aliases = this._manifestAudio.aliases || {};
+    const primaryAliases = this._manifestAudio.aliases || {};
+    const fallbackAliases = this._manifestAudio.fallbackAliases || {};
+    const canPlayOgg = (() => {
+      if (typeof document === "undefined") return false;
+      const audio = document.createElement("audio");
+      return !!(audio.canPlayType && audio.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/, ""));
+    })();
+    const aliasCandidates = {};
+    for (const [alias, url] of Object.entries(primaryAliases)) {
+      const fallbackUrl = fallbackAliases[alias];
+      const candidates = canPlayOgg ? [url, fallbackUrl] : [fallbackUrl, url];
+      aliasCandidates[alias] = candidates.filter(Boolean);
+    }
     await preloadAssetSignatures([
-      ...Object.values(aliases),
+      ...Object.values(aliasCandidates).flat(),
       this._manifestAudio.bgm,
     ].filter(Boolean));
     const decode = async (url) => {
@@ -49,9 +61,20 @@ export class AudioManager {
       const buf = await res.arrayBuffer();
       return await this.ctx.decodeAudioData(buf);
     };
+    const decodeFirst = async (urls) => {
+      let lastError = null;
+      for (const url of urls) {
+        try {
+          return await decode(url);
+        } catch (err) {
+          lastError = err;
+        }
+      }
+      throw lastError || new Error("audio decode failed");
+    };
     const jobs = [];
-    for (const [alias, url] of Object.entries(aliases)) {
-      jobs.push(decode(url).then((b) => { this.buffers[alias] = b; }).catch(() => {}));
+    for (const [alias, urls] of Object.entries(aliasCandidates)) {
+      jobs.push(decodeFirst(urls).then((b) => { this.buffers[alias] = b; }).catch(() => {}));
     }
     if (this._manifestAudio.bgm) {
       jobs.push(decode(this._manifestAudio.bgm).then((b) => { this.bgmBuffer = b; }).catch(() => {}));
