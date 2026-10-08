@@ -221,6 +221,12 @@ async function boot() {
   app.audio.setMusicVolume(app.save.music_volume);
   app.audio.setSfxVolume(app.save.sfx_volume);
 
+  // Any interaction can satisfy the browser autoplay policy, including the
+  // nickname/settings UI and clicks that happen while assets are still loading.
+  const unlockAudio = () => app.audio.unlock();
+  window.addEventListener("pointerdown", unlockAudio, { capture: true });
+  window.addEventListener("keydown", unlockAudio, { capture: true });
+
   app.assets = new Assets();
   app.ui = new UI(app);
 

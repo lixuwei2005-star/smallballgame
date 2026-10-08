@@ -77,7 +77,13 @@ export class AudioManager {
       jobs.push(decodeFirst(urls).then((b) => { this.buffers[alias] = b; }).catch(() => {}));
     }
     if (this._manifestAudio.bgm) {
-      jobs.push(decode(this._manifestAudio.bgm).then((b) => { this.bgmBuffer = b; }).catch(() => {}));
+      jobs.push(decode(this._manifestAudio.bgm).then((b) => {
+        this.bgmBuffer = b;
+        // The first gesture can arrive before the BGM has finished decoding.
+        // In that case unlock() cannot start it, so retry as soon as the buffer
+        // becomes available.
+        if (this.unlocked) this.startBgm();
+      }).catch(() => {}));
     }
     await Promise.all(jobs);
   }
@@ -97,10 +103,10 @@ export class AudioManager {
     this._ensureCtx();
     if (!this.ctx) return;
     if (this.ctx.state === "suspended") this.ctx.resume();
-    if (!this.unlocked) {
-      this.unlocked = true;
-      this.startBgm();
-    }
+    this.unlocked = true;
+    // Retrying is harmless (startBgm is idempotent) and lets a later gesture
+    // recover if an earlier resume/start attempt was too early.
+    this.startBgm();
   }
 
   startBgm() {
